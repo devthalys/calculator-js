@@ -9,24 +9,48 @@ class Calculator {
     this.currentOperation = "";
   }
 
-
   addDigit(digit) {
     // checando se a aoperação tem um ponto
-    if(digit == "." && this.currentOperationText.innerText.includes(".")) {
-      return
+    if (digit === "." && this.currentOperationText.innerText.includes(".")) {
+      return;
     }
-    
-    this.currentOperation = digit
-    this.updateScreen()
+
+    this.currentOperation = digit;
+    this.updateScreen();
   }
 
-// processando operações da calculadora
-processOperation(operation) {
-  console.log(operation);
-}
+  // processando operações da calculadora
+  processOperation(operation) {
+    let operationValue;
+    const previous = +this.previousOperationText.innerText.split(" ")[0];
+    const current = +this.currentOperationText.innerText;
 
-  updateScreen() {
-    this.currentOperationText.innerText += this.currentOperation
+    switch (operation) {
+      case "+":
+        operationValue = previous + current
+        this.updateScreen(operationValue, operation, current, previous)
+        break;
+      default:
+        return;
+    }
+  }
+
+  updateScreen(
+    operationValue = null,
+    operation = null,
+    current = null,
+    previous = null
+  ) {
+    if(operationValue === null){
+      this.currentOperationText.innerText += this.currentOperation;
+    } else {
+      if(previous === 0) {
+        operationValue = current
+      }
+
+      this.previousOperationText.innerText = `${operationValue} ${operation}`
+      this.currentOperationText.innerText = ""
+    }
   }
 }
 
