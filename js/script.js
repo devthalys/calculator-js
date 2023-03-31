@@ -58,6 +58,9 @@ class Calculator {
       case "C":
         this.processClearOperation();
         break;
+      case "=":
+        this.processEqualOperator();
+        break;
       default:
         return;
     }
@@ -94,11 +97,15 @@ class Calculator {
       this.currentOperationText.innerText.slice(0, -1);
   }
   processClearCurrentOperation() {
-    this.currentOperationText.innerText = ""
+    this.currentOperationText.innerText = "";
   }
-  processClearOperation(){
+  processClearOperation() {
     this.currentOperationText.innerText = "";
     this.previousOperationText.innerText = "";
+  }
+  processEqualOperator() {
+    const operation = this.previousOperationText.innerText.split(" ")[1]
+    this.processOperation(operation)
   }
 }
 
